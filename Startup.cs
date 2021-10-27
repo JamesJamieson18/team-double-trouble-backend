@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using team_double_trouble_backend.Models;
 
 namespace team_double_trouble_backend
 {
@@ -26,7 +28,7 @@ namespace team_double_trouble_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<PostsContext>(options => options.UseSqlite("Data Source=Quacker.db"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
