@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "WKPIAunvBJYFBQqiOCy/7+AM99BNupdYsX3EV6z2sa0H+8MYjxLxUeqMVVs9/bfJdgtGtG5Hrt+QZxBz7SNJfg==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\team-double-trouble-backend\\team-double-trouble-backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\diamo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\diamo\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\diamo\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\diamo\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\diamo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\diamo\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
