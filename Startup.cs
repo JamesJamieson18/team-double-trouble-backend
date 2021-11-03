@@ -28,6 +28,14 @@ namespace team_double_trouble_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy",
+                        builder => builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                        );
+            });
             services.AddDbContext<PostsContext>(options => options.UseSqlite("Data Source=Quacker.db"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -46,7 +54,9 @@ namespace team_double_trouble_backend
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "team_double_trouble_backend v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
