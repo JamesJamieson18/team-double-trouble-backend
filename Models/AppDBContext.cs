@@ -2,9 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace team_double_trouble_backend.Models
 {
-    public class PostsContext : DbContext
+    public class AppDBContext : DbContext
     {
-        public PostsContext(DbContextOptions<PostsContext> options) : base(options)
+        public AppDBContext(DbContextOptions<AppDBContext> options) : base(options)
         {
 
         }

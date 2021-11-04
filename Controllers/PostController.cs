@@ -11,23 +11,23 @@ namespace team_double_trouble_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostsController : ControllerBase
+    public class PostController : ControllerBase
     {
-        private readonly PostsContext _context;
+        private readonly AppDBContext _context;
 
-        public PostsController(PostsContext context)
+        public PostController(AppDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Posts
+        // GET: api/Post
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
             return await _context.Posts.ToListAsync();
         }
 
-        // GET: api/Posts/5
+        // GET: api/Post/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(long id)
         {
@@ -41,7 +41,7 @@ namespace team_double_trouble_backend.Controllers
             return post;
         }
 
-        // PUT: api/Posts/5
+        // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPost(long id, Post post)
@@ -72,7 +72,7 @@ namespace team_double_trouble_backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Posts
+        // POST: api/Post
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Post>> PostPost(Post post)
@@ -83,7 +83,7 @@ namespace team_double_trouble_backend.Controllers
             return CreatedAtAction("GetPost", new { id = post.PostId }, post);
         }
 
-        // DELETE: api/Posts/5
+        // DELETE: api/Post/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(long id)
         {

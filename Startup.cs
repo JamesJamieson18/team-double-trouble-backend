@@ -36,7 +36,7 @@ namespace team_double_trouble_backend
                             .AllowAnyHeader()
                         );
             });
-            services.AddDbContext<PostsContext>(options => options.UseSqlite("Data Source=Quacker.db"));
+            services.AddDbContext<AppDBContext>(options => options.UseSqlite("Data Source=Quacker.db"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
