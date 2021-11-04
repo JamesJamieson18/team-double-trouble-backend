@@ -41,6 +41,20 @@ namespace team_double_trouble_backend.Controllers
             return post;
         }
 
+        // GET: /api/Post/UserPosts 18
+        [HttpGet("UserPosts " + "{UserId}")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetUserPost(long UserId)
+        {
+            var Userposts = await _context.Posts.Where(post => post.UserId == UserId).ToListAsync();
+
+             if (Userposts == null)
+             {
+                 return NotFound();
+            }
+
+            return Userposts;
+        }
+
         // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
