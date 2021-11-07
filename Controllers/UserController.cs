@@ -1,107 +1,75 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using team_double_trouble_backend.Authorization;
+using team_double_trouble_backend.Helpers;
 using team_double_trouble_backend.Models;
+using team_double_trouble_backend.Services;
 
+//any new action methods added to the controller will be secure by default unless explicitly made public with the [AllowAnonymous] attributes. 
 namespace team_double_trouble_backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
-    public class UserController : ControllerBase
+    [Route("[controller]")]
+    public class UsersController : ControllerBase
     {
-        private readonly AppDBContext _context;
+        private IUserService _userService;
+        private IMapper _mapper;
+        private readonly Settings _appSettings;
 
-        public UserController(AppDBContext context)
+        public UsersController(
+            IUserService userService,
+            IMapper mapper,
+            IOptions<Settings> appSettings)
         {
-            _context = context;
+            _userService = userService;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
-        // GET: api/User
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _userService.Authenticate(model);
+            return Ok(response);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register(RegisterRequest model)
+        {
+            _userService.Register(model);
+            return Ok(new { message = "Registration successful" });
+        }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public IActionResult GetAll()
         {
-            return await _context.Users.ToListAsync();
+            var users = _userService.GetAll();
+            return Ok(users);
         }
 
-        // GET: api/User/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
+        public IActionResult GetById(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return user;
+            var user = _userService.GetById(id);
+            return Ok(user);
         }
 
-        // PUT: api/User/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(long id, User user)
+        public IActionResult Update(int id, UpdateRequest model)
         {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            _userService.Update(id, model);
+            return Ok(new { message = "User updated successfully" });
         }
 
-        // POST: api/User
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
-        }
-
-        // DELETE: api/User/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        public IActionResult Delete(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(long id)
-        {
-            return _context.Users.Any(e => e.UserId == id);
+            _userService.Delete(id);
+            return Ok(new { message = "User deleted successfully" });
         }
     }
 }

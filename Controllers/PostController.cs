@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using team_double_trouble_backend.Helpers;
 using team_double_trouble_backend.Models;
+using team_double_trouble_backend.Services;
 
 namespace team_double_trouble_backend.Controllers
 {
@@ -13,9 +15,9 @@ namespace team_double_trouble_backend.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly AppDBContext _context;
+        private readonly SqliteDataContext _context;
 
-        public PostController(AppDBContext context)
+        public PostController(SqliteDataContext context)
         {
             _context = context;
         }
@@ -42,18 +44,18 @@ namespace team_double_trouble_backend.Controllers
         }
 
         // GET: /api/Post/UserPosts 18
-        [HttpGet("UserPosts " + "{UserId}")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetUserPost(long UserId)
-        {
-            var Userposts = await _context.Posts.Where(post => post.UserId == UserId).ToListAsync();
+        // [HttpGet("UserPosts/{UserId}")]
+        // public async Task<ActionResult<IEnumerable<Post>>> GetUserPost(long UserId)
+        // {
+        //     var Userposts = await _context.Posts.Where(post => post.UserId == UserId).ToListAsync();
 
-             if (Userposts == null)
-             {
-                 return NotFound();
-            }
+        //      if (Userposts == null)
+        //      {
+        //          return NotFound();
+        //     }
 
-            return Userposts;
-        }
+        //     return Userposts;
+        // }
 
         // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
