@@ -27,7 +27,7 @@ namespace team_double_trouble_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts.OrderByDescending(p => p.PostId).ToListAsync();
         }
 
         // GET: api/Post/5
