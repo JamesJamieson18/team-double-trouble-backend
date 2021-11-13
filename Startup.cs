@@ -36,6 +36,7 @@ namespace team_double_trouble_backend
             services.Configure<Settings>(_configuration.GetSection("AppSettings"));
             services.AddScoped<IJwtUtils, JwtToken>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPostService, PostService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddControllers();

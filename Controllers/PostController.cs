@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,113 +13,73 @@ using team_double_trouble_backend.Authorization;
 
 namespace team_double_trouble_backend.Controllers
 {
-    [Route("api/[controller]")]
+    //[Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class PostController : ControllerBase
     {
-        private readonly SqliteDataContext _context;
+        private IPostService _postService;
+        private IMapper _mapper;
 
-        public PostController(SqliteDataContext context)
+        public PostController(IPostService postService, IMapper mapper)
         {
-            _context = context;
+            _postService = postService;
+            _mapper = mapper;
         }
 
         // GET: api/Post
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public IActionResult GetAll()
         {
-            return await _context.Posts.OrderByDescending(p => p.PostId).ToListAsync();
+            var posts = _postService.GetAll();
+            return Ok(posts);
         }
 
         // GET: api/Post/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Post>> GetPost(long id)
+        public IActionResult GetById(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return post;
+            var post = _postService.GetById(id);
+            return Ok(post);
         }
 
         //GET: /api/Post/UserPosts 18
         [HttpGet("UserPosts/{UserId}")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetUserPost(long UserId)
+        public IActionResult GetByUserId(int UserId)
         {
-             var Userposts = await _context.Posts.Where(post => post.UserId == UserId).ToListAsync();
-
-              if (Userposts == null)
-              {
-                  return NotFound();
-             }
-
-             return Userposts;
+            var post = _postService.GetByUserId(UserId);
+            return Ok(post);
         }
 
         // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(long id, Post post)
+        public IActionResult Update(int id, PostUpdateRequest model)
         {
-            if (id != post.PostId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(post).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PostExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            _postService.Update(id, model);
+            return Ok(new { message = "Post updated successfully" });
         }
 
         // POST: api/Post
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Post>> PostPost(Post post)
+        public IActionResult Create(MakePostRequest model)
         {
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPost", new { id = post.PostId }, post);
+            _postService.Create(model);
+            return Ok(new { message = "Post created successfully" });
         }
 
         // DELETE: api/Post/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePost(long id)
+        public IActionResult Delete(int id)
         {
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            _context.Posts.Remove(post);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            _postService.Delete(id);
+            return Ok(new { message = "Post deleted successfully" });
         }
 
-        private bool PostExists(long id)
-        {
-            return _context.Posts.Any(e => e.PostId == id);
-        }
+        // private bool PostExists(long id)
+        // {
+        //     return _context.Posts.Any(e => e.PostId == id);
+        // }
     }
 }
