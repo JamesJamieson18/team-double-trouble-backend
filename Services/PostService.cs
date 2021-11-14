@@ -1,4 +1,5 @@
 using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using team_double_trouble_backend.Authorization;
@@ -51,8 +52,10 @@ namespace team_double_trouble_backend.Services
             if (_context.Posts.Any(x => x.Text == model.Text))
                 throw new AppException("Post has already been made");
 
+            var Date = DateTime.UtcNow;
             // map model to new user object
             var post = _mapper.Map<Post>(model);
+            post.Date = DateTime.Now;
 
 
             // save post

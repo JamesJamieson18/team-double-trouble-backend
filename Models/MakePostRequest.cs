@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace team_double_trouble_backend.Models
 {
@@ -9,6 +10,6 @@ namespace team_double_trouble_backend.Models
     public string Username { get; set; }
     [Required]
     public string Text { get; set; }
-    public string Date { get; set; }
+    //public DataType Date { get; set; }
     }
 }
