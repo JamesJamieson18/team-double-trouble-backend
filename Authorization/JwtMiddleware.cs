@@ -7,7 +7,7 @@ using team_double_trouble_backend.Services;
 
 namespace team_double_trouble_backend.Authorization
 {
-    //JWT Middleware extracts the token from a request and validates it, if validation fails the user will only be able to access routes with the AllowAnonymous attribute and will not be attached to the HTTP context, AllowAnonUsers will handle failed authorizations and return a 401 Unauthorized response.
+    //JWT Middleware extracts the token from a request and validates it, if validation fails the user will only be able to access routes with the AllowAnonymous attribute and will not be attached to the HTTP context, AuthUsers will handle failed authorizations and return a 401 Unauthorized response.
     public class JwtMiddleware
     {
         private readonly RequestDelegate _next;

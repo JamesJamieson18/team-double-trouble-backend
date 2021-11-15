@@ -1,22 +1,18 @@
 using AutoMapper;
-using team_double_trouble_backend.Entities;
 using team_double_trouble_backend.Models;
-
-//Using AutoMapper to map between User in Entities and AuthenticateResponse, RegisterRequest, UpdateRequest in Models
 
 namespace team_double_trouble_backend.Helpers
 {
+    //used to map MakePostRequest, PostUpdateRequest in Models to Post in Entities
     public class AutoMapperPost : Profile
     {
         public AutoMapperPost()
         {
-            // User -> AuthenticateResponse
-            // CreateMap<User, AuthenticateResponse>();
 
-            // RegisterRequest -> User
+            // MakePostRequest -> Post
             CreateMap<MakePostRequest, Post>();
 
-            // UpdateRequest -> User
+            // PostUpdateRequest -> Post
             CreateMap<PostUpdateRequest, Post>()
                 .ForAllMembers(x => x.Condition(
                     (src, dest, prop) =>

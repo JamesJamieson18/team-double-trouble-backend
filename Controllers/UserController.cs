@@ -6,10 +6,9 @@ using team_double_trouble_backend.Helpers;
 using team_double_trouble_backend.Models;
 using team_double_trouble_backend.Services;
 
-//any new action methods added to the controller will be secure by default unless explicitly made public with the [AllowAnonymous] attributes. 
 namespace team_double_trouble_backend.Controllers
 {
-    [Authorize]
+    [Authorize] //any new action methods added to the controller will be secure by default unless explicitly made public with the [AllowAnonymous] attributes. 
     [ApiController]
     [Route("[controller]")]
     public class UsersController : ControllerBase

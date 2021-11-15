@@ -43,7 +43,7 @@ namespace team_double_trouble_backend.Controllers
             return Ok(post);
         }
 
-        //GET: /api/Post/UserPosts 18
+        //GET: /api/Post/UserPosts/18
         [HttpGet("UserPosts/{UserId}")]
         public IActionResult GetByUserId(int UserId)
         {
@@ -52,7 +52,6 @@ namespace team_double_trouble_backend.Controllers
         }
 
         // PUT: api/Post/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public IActionResult Update(int id, PostUpdateRequest model)
         {
@@ -61,7 +60,6 @@ namespace team_double_trouble_backend.Controllers
         }
 
         // POST: api/Post
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public IActionResult Create(MakePostRequest model)
         {
@@ -76,10 +74,5 @@ namespace team_double_trouble_backend.Controllers
             _postService.Delete(id);
             return Ok(new { message = "Post deleted successfully" });
         }
-
-        // private bool PostExists(long id)
-        // {
-        //     return _context.Posts.Any(e => e.PostId == id);
-        // }
     }
 }
