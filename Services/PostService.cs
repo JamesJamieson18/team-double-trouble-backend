@@ -33,7 +33,7 @@ namespace team_double_trouble_backend.Services
 
         public IEnumerable<Post> GetAll()
         {
-            return _context.Posts;
+            return _context.Posts.OrderByDescending(p => p.PostId);
         }
 
         public Post GetById(int id)
@@ -42,19 +42,20 @@ namespace team_double_trouble_backend.Services
         }
         public  IQueryable<Post> GetByUserId(int UserId)
         {
-            var Posts = _context.Posts.Where(post => post.UserId == UserId);
+            var Posts = _context.Posts.Where(post => post.UserId == UserId).OrderByDescending(p => p.PostId);
             if (Posts == null) throw new KeyNotFoundException("No posts found for this user");
             return Posts;
         }
         public void Create(MakePostRequest model)
         {
-            // check for same post
+            // check for any posts with the same text
             if (_context.Posts.Any(x => x.Text == model.Text))
                 throw new AppException("Post has already been made");
 
-            var Date = DateTime.UtcNow;
-            // map model to new user object
+            // map model to new post object
             var post = _mapper.Map<Post>(model);
+
+            // set the Date to current UTC time
             post.Date = DateTime.Now;
 
 
