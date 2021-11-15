@@ -7,6 +7,9 @@ using team_double_trouble_backend.Entities;
 using team_double_trouble_backend.Helpers;
 using team_double_trouble_backend.Models;
 
+using System.Globalization;
+using System.Threading;
+
 namespace team_double_trouble_backend.Services
 {
     public interface IPostService
@@ -56,7 +59,7 @@ namespace team_double_trouble_backend.Services
             var post = _mapper.Map<Post>(model);
 
             // set the Date to current UTC time
-            post.Date = DateTime.Now;
+            post.Date = DateTime.UtcNow.ToString("MM.dd.yyyy");
 
 
             // save post
